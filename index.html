@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Roqa 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+
+<script>
+/* ============================================================
+   ⚙️ CONFIG — كل التعديلات من هنا
+   ============================================================ */
+const CONFIG = {
+
+  PASSWORD: "1912",
+
+  // 🎂 24 يوليو 2026 (الشهر بيبدأ من 0، فـ 6 = يوليو)
+  BIRTHDAY: new Date(2026, 6, 24, 0, 0, 0),
+
+  CHILD_PHOTO: "images/baby.jpg",
+
+  LETTER_TEXT: `Hii Roqa 💌
+
+This is your first birthday with me and hopefully not the last ❤️
+
+On a day like this the most beautiful thing in my life came into this world. The person who brought light to my life and gave it a beautiful meaning.
+
+Happy Birthday my love 🎂
+
+I wish you a million happy years and I hope your next birthday will be one we celebrate in our own home.
+
+Maybe your birthday is not here yet but from now until your next birthday I will keep celebrating you because someone as special as you deserves to be celebrated every single day and not just once a year.
+
+Happy Birthday to my favorite person ❤️
+
+Forever yours,
+Muhammed`,
+
+  // 🎵 ملف الأغنية (موجود جنب index.html)
+  SONG_URL: "song.m4a",
+
+  REASONS: [
+    { img: "images/reason-01.jpg", text: "Because your smile makes my day better" },
+    { img: "images/reason-02.jpg", text: "Because you always make me laugh" },
+    { img: "images/reason-03.jpg", text: "Because I feel comfortable with you" },
+    { img: "images/reason-04.jpg", text: "Because I can be myself around you" },
+    { img: "images/reason-05.jpg", text: "Because you make normal days feel special" },
+    { img: "images/reason-06.jpg", text: "Because you understand me" },
+    { img: "images/reason-07.jpg", text: "Because you always support me" },
+    { img: "images/reason-08.jpg", text: "Because you have a beautiful heart" },
+    { img: "images/reason-09.jpg", text: "Because you make hard days easier" },
+    { img: "images/reason-10.jpg", text: "Because life is more fun with you in it" },
+    { img: "images/reason-11.jpg", text: "Because I love the way you think" },
+    { img: "images/reason-12.jpg", text: "Because you make me want to be better" },
+    { img: "images/reason-13.jpg", text: "Because I love listening to you talk" },
+    { img: "images/reason-14.jpg", text: "Because I love your sense of humor" },
+    { img: "images/reason-15.jpg", text: "Because you make even simple moments memorable" },
+    { img: "images/reason-16.jpg", text: "Because you make me feel appreciated" },
+    { img: "images/reason-17.jpg", text: "Because I enjoy doing nothing with you as much as doing everything with you" },
+    { img: "images/reason-18.jpg", text: "Because I can always count on you" },
+    { img: "images/reason-19.jpg", text: "Because I love the person I am when I'm with you" },
+    { img: "images/reason-20.jpg", text: "Because being with you feels like home" },
+    { img: "images/reason-21.jpg", text: "Because I fell in love with your soul before anything else" },
+    { img: "images/reason-22.jpg", text: "Because every day I find a new reason to love you" },
+    { img: "images/reason-23.jpg", text: "Because if I had to choose again, I would still choose you" },
+    { img: "images/reason-24.jpg", text: "Because you're simply you ❤️" },
+  ],
+
+  // 🎬 لينكات الفيديوهين (mp4) — حط أسماء الملفات هنا لما تجهز
+  VIDEO_1: "video1.mp4",
+  VIDEO_2: "video2.mp4",
+
+  // 📅 صفحة الخطة — بتظهر لما يفضل يومين أو أقل (المحتوى نفسه جوه صفحة plan تحت)
+  PLAN_UNLOCK_DAYS: 2,
+};
+</script>
+
+<style>
+:root{
+  --bg-deep:#160b26;
+  --bg-mid:#241239;
+  --velvet:#8c1830;
+  --velvet-dark:#5e0e1f;
+  --gold:#e9b95c;
+  --gold-soft:#f5d99a;
+  --cream:#f9efdd;
+  --rose:#f07f9e;
+  --card-front:#2e1a4a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Nunito',sans-serif;
+  background:radial-gradient(ellipse at 50% 0%, var(--bg-mid) 0%, var(--bg-deep) 70%);
+  color:var(--cream);
+  overflow-x:hidden;
+}
+.screen{
+  min-height:100vh; min-height:100dvh;
+  display:none;
+  flex-direction:column; align-items:center; justify-content:center;
+  padding:24px; text-align:center; position:relative;
+}
+.screen.active{display:flex}
+.script{font-family:'Great Vibes',cursive; color:var(--gold-soft)}
+
+.btn{
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem;
+  color:var(--bg-deep); background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  border:none; border-radius:999px; padding:14px 34px; cursor:pointer;
+  box-shadow:0 6px 20px rgba(233,185,92,.35);
+  transition:transform .2s, box-shadow .2s;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(233,185,92,.5)}
+.btn:focus-visible{outline:3px solid var(--rose); outline-offset:3px}
+
+/* ---------- 1) الباسورد ---------- */
+#lockIcon{font-size:3.4rem; margin-bottom:14px}
+#gate h1{font-size:2.8rem; margin-bottom:6px}
+#gate p{opacity:.75; margin-bottom:26px}
+#pwForm{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+#pwInput{
+  font-size:1.15rem; padding:13px 20px; border-radius:999px; border:2px solid rgba(233,185,92,.4);
+  background:rgba(255,255,255,.06); color:var(--cream); text-align:center; letter-spacing:4px;
+  width:220px; outline:none; transition:border .2s;
+}
+#pwInput:focus{border-color:var(--gold)}
+#pwError{color:var(--rose); font-weight:600; margin-top:14px; min-height:24px}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}50%{transform:translateX(9px)}75%{transform:translateX(-5px)}}
+
+/* ---------- 2) الصورة + الإيميل ---------- */
+#photoStage{position:relative; width:min(420px,88vw); margin-bottom:8px}
+#childPhoto{
+  width:100%; display:block; border-radius:20px;
+  border:5px solid var(--gold); box-shadow:0 14px 40px rgba(0,0,0,.5);
+  background:#fff;
+  opacity:0; transform:scale(.5) rotate(-6deg);
+  animation:popIn .9s .4s cubic-bezier(.34,1.56,.64,1) forwards, sway 3.5s 1.4s ease-in-out infinite;
+}
+@keyframes popIn{to{opacity:1; transform:scale(1) rotate(0)}}
+@keyframes sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+#emailBtn{
+  margin-top:34px; opacity:0; animation:fadeUp .7s 3.2s forwards;
+  display:flex; align-items:center; gap:10px;
+}
+#emailBtn .dot{width:11px; height:11px; background:var(--rose); border-radius:50%; animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1); opacity:1}50%{transform:scale(1.6); opacity:.5}}
+@keyframes fadeUp{from{opacity:0; transform:translateY(16px)}to{opacity:1; transform:translateY(0)}}
+
+/* ---------- الرسالة ---------- */
+#letterOverlay{
+  position:fixed; inset:0; background:rgba(10,5,20,.85); display:none;
+  align-items:center; justify-content:center; padding:20px; z-index:60;
+}
+#letterOverlay.open{display:flex}
+#letterPaper{
+  background:var(--cream); color:#3a2430; max-width:560px; width:100%;
+  border-radius:14px; padding:36px 30px; max-height:80vh; overflow:auto;
+  box-shadow:0 30px 80px rgba(0,0,0,.6); position:relative;
+  animation:paperIn .5s;
+}
+@keyframes paperIn{from{opacity:0; transform:translateY(40px) scale(.95)}to{opacity:1; transform:none}}
+#letterPaper h2{font-family:'Great Vibes',cursive; font-size:2.2rem; color:#8c1830; margin-bottom:16px}
+#letterText{white-space:pre-wrap; font-size:1.05rem; line-height:1.9; text-align:left}
+#closeLetter{position:absolute; top:12px; right:14px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#8c1830}
+
+/* ---------- 3) الاحتفال + العد التنازلي ---------- */
+#party h1{font-size:clamp(3rem,9vw,5.2rem); margin-bottom:4px}
+#party .sub{opacity:.8; margin-bottom:34px; font-size:1.05rem}
+#countdown{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:40px}
+.cd-box{
+  background:rgba(255,255,255,.06); border:1.5px solid rgba(233,185,92,.35);
+  border-radius:16px; padding:16px 10px; min-width:82px;
+}
+.cd-num{font-family:'Playfair Display',serif; font-size:2.4rem; font-weight:700; color:var(--gold-soft)}
+.cd-label{font-size:.75rem; letter-spacing:2px; text-transform:uppercase; opacity:.7; margin-top:4px}
+.balloon{position:absolute; bottom:-90px; font-size:2.2rem; animation:floatUp linear infinite; pointer-events:none}
+@keyframes floatUp{to{transform:translateY(-115vh) rotate(12deg)}}
+
+/* ---------- الستارة ---------- */
+#curtain{position:fixed; inset:0; z-index:80; pointer-events:none; display:none; background:transparent}
+#curtain.show{display:block}
+.curtain-half{
+  position:absolute; top:0; bottom:0; width:50.5%;
+  /* طيات مخملية واقعية: تدرجات ناعمة غامق/فاتح متكررة */
+  background:
+    repeating-linear-gradient(90deg,
+      #340a17 0px,
+      #4c1122 14px,
+      #611830 26px,
+      #4c1122 38px,
+      #340a17 52px),
+    #3d0d1c;
+  box-shadow:
+    inset 0 -60px 90px rgba(0,0,0,.65),
+    inset 0 50px 70px rgba(0,0,0,.5);
+  transition:transform 3.5s cubic-bezier(.55,.05,.35,1);
+  transform:translateX(0); /* الوضع الافتراضي: مقفولة */
+}
+/* الحرف الدهبي الرفيع على حافة الفتحة زي الصورة */
+.curtain-half::before{
+  content:""; position:absolute; top:0; bottom:0; width:4px;
+  background:linear-gradient(180deg,#d4ab55,#8f7433 60%,#6f5a24);
+}
+#curtainL::before{right:0}
+#curtainR::before{left:0}
+/* الشريط الدهبي السميك تحت */
+.curtain-half::after{
+  content:""; position:absolute; bottom:0; left:0; right:0; height:44px;
+  background:linear-gradient(180deg,#a5893a,#7a6528 70%,#5e4d1d);
+  box-shadow:inset 0 5px 8px rgba(255,255,255,.18);
+}
+#curtainL{left:0}
+#curtainR{right:0}
+#curtain.open #curtainL{transform:translateX(-102%)}
+#curtain.open #curtainR{transform:translateX(102%)}
+
+/* ---------- 4) صفحة الأسباب ---------- */
+#reasons{justify-content:flex-start; padding-top:60px}
+#reasons h1{font-size:clamp(2.6rem,7vw,4.4rem); margin-bottom:8px}
+#reasons .hint{opacity:.7; margin-bottom:36px; font-size:.95rem}
+#grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:16px; width:100%; max-width:1000px; margin-bottom:50px;
+}
+.card{perspective:900px; cursor:pointer; aspect-ratio:3/4}
+.card-inner{position:relative; width:100%; height:100%; transition:transform .7s; transform-style:preserve-3d}
+.card.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{
+  position:absolute; inset:0; backface-visibility:hidden; border-radius:14px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.card-front{border:2px solid rgba(233,185,92,.35); background:var(--card-front)}
+.card-front img{width:100%; height:100%; object-fit:cover}
+.card-front .num{font-family:'Playfair Display',serif; font-size:2rem; color:var(--gold-soft)}
+.card-back{
+  transform:rotateY(180deg);
+  background:linear-gradient(150deg,var(--velvet),var(--velvet-dark));
+  border:2px solid var(--gold); padding:12px;
+  font-size:.9rem; line-height:1.6; color:var(--cream); font-weight:600;
+}
+
+/* ---------- زرار الموسيقى العائم ---------- */
+#musicBtn{
+  position:fixed; bottom:18px; right:18px; z-index:70; display:none;
+  width:52px; height:52px; border-radius:50%; border:2px solid var(--gold);
+  background:rgba(22,11,38,.85); color:var(--gold-soft); font-size:1.4rem; cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,.5);
+}
+#musicBtn.playing{animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- 5) الفيديوهات ---------- */
+#videos{justify-content:flex-start; padding-top:60px}
+#videos h1{font-size:clamp(2.4rem,6vw,3.8rem); margin-bottom:36px}
+.video-wrap{width:min(320px,85vw); margin-bottom:30px}
+.video-wrap video{
+  width:100%; max-height:62vh; object-fit:contain; background:#000;
+  border-radius:16px; border:3px solid rgba(233,185,92,.4); box-shadow:0 14px 40px rgba(0,0,0,.45);
+}
+.video-missing{
+  aspect-ratio:9/16; display:flex; align-items:center; justify-content:center;
+  border:2px dashed rgba(233,185,92,.4); border-radius:16px; color:var(--gold-soft);
+}
+
+/* ---------- 6) خطة اليوم (ستايل دعوة بيج/موف) ---------- */
+#plan{justify-content:flex-start; padding-top:70px}
+#plan h1{font-size:clamp(2.6rem,7vw,4.2rem); margin-bottom:30px}
+#stayTuned{max-width:460px}
+#stayTuned .eyes{font-size:3.4rem; margin-bottom:14px; animation:pulse 1.6s infinite; display:inline-block}
+#stayTuned p{opacity:.85; line-height:1.9; font-size:1.1rem}
+
+.invite{max-width:520px; width:100%}
+.invite-card{
+  background:linear-gradient(165deg,#f6efe2,#eadcc8);
+  color:#4a333a; border-radius:24px; padding:30px 26px; margin-bottom:24px;
+  box-shadow:0 16px 40px rgba(0,0,0,.4); text-align:center;
+}
+.invite-card h3{
+  font-family:'Playfair Display',serif; font-size:1.5rem; color:#722f37;
+  letter-spacing:1px; margin-bottom:6px;
+}
+.invite-card .tagline{font-family:'Great Vibes',cursive; font-size:1.7rem; color:#9d7189; margin-bottom:4px}
+.invite-card p{line-height:1.9; font-size:1rem}
+.invite-sub{font-size:.85rem; letter-spacing:3px; text-transform:uppercase; color:#a3806b; margin-bottom:14px}
+.swatches{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin:20px 0 14px}
+.swatch{display:flex; flex-direction:column; align-items:center; gap:7px; font-size:.8rem; color:#6b4f56; font-weight:600}
+.swatch .dot{width:36px; height:36px; border-radius:50%; box-shadow:inset 0 -4px 8px rgba(0,0,0,.15), 0 3px 8px rgba(0,0,0,.15)}
+.think{font-family:'Playfair Display',serif; font-style:italic; color:#722f37; line-height:2; margin-top:16px}
+.plan-row{display:flex; align-items:center; gap:16px; text-align:left; padding:13px 0; border-bottom:1.5px dashed rgba(114,47,55,.22)}
+.plan-row:last-child{border-bottom:none}
+.plan-row svg{width:62px; height:62px; flex:0 0 62px; filter:drop-shadow(0 3px 6px rgba(0,0,0,.12))}
+.plan-row span{font-size:1rem; font-weight:600; color:#54393f; line-height:1.6}
+.invite-footer{font-family:'Great Vibes',cursive; font-size:1.55rem; color:#722f37; line-height:1.7}
+
+.confetti-piece{position:fixed; top:-14px; z-index:90; pointer-events:none; animation:confFall linear forwards}
+@keyframes confFall{to{transform:translateY(110vh) rotate(720deg); opacity:.4}}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01s !important; transition-duration:.01s !important}
+}
+</style>
+</head>
+<body>
+
+<!-- 🎭 الستارة -->
+<div id="curtain"><div class="curtain-half" id="curtainL"></div><div class="curtain-half" id="curtainR"></div></div>
+
+<!-- مشغل الأغنية + زرار التحكم -->
+<audio id="song" loop preload="auto"></audio>
+<button id="musicBtn" onclick="toggleMusic()" aria-label="Play or pause the song">🎵</button>
+
+<!-- 1️⃣ الباسورد -->
+<section class="screen active" id="gate">
+  <div id="lockIcon">🔒</div>
+  <h1 class="script">A little surprise...</h1>
+  <p>Enter the secret password 🤫</p>
+  <div id="pwForm">
+    <input id="pwInput" type="password" placeholder="••••" autocomplete="off">
+    <button class="btn" onclick="checkPassword()">Unlock</button>
+  </div>
+  <div id="pwError"></div>
+</section>
+
+<!-- 2️⃣ الصورة + الإيميل -->
+<section class="screen" id="mail">
+  <div id="photoStage">
+    <img id="childPhoto" alt="Baby Roqa">
+  </div>
+  <button class="btn" id="emailBtn" onclick="openLetter()"><span class="dot"></span> You've got a new email 💌</button>
+</section>
+
+<div id="letterOverlay">
+  <div id="letterPaper">
+    <button id="closeLetter" onclick="closeLetter()">✕</button>
+    <h2>To Roqa ❤️</h2>
+    <div id="letterText"></div>
+    <div style="text-align:center; margin-top:26px">
+      <button class="btn" onclick="goToParty()">Continue ➜</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3️⃣ الاحتفال + العد التنازلي -->
+<section class="screen" id="party">
+  <h1 class="script">The Big Day Is Coming</h1>
+  <p class="sub">🎈 Something special is waiting for you 🎈</p>
+  <div id="countdown">
+    <div class="cd-box"><div class="cd-num" id="cdD">0</div><div class="cd-label">Days</div></div>
+    <div class="cd-box"><div class="cd-num" id="cdH">0</div><div class="cd-label">Hours</div></div>
+    <div class="cd-box"><div class="cd-num" id="cdM">0</div><div class="cd-label">Minutes</div></div>
+    <div class="cd-box"><div class="cd-num" id="cdS">0</div><div class="cd-label">Seconds</div></div>
+  </div>
+  <button class="btn" onclick="enterCelebration()">🎭 Enter the Celebration</button>
+</section>
+
+<!-- 4️⃣ 24 سبب -->
+<section class="screen" id="reasons">
+  <h1 class="script">24 Reasons Why I Love You</h1>
+  <p class="hint">Tap every card 💛</p>
+  <div id="grid"></div>
+  <button class="btn" onclick="showScreen('videos')">Next ➜</button>
+  <div style="height:40px"></div>
+</section>
+
+<!-- 5️⃣ الفيديوهات -->
+<section class="screen" id="videos">
+  <h1 class="script">Made For You</h1>
+  <div class="video-wrap" id="vid1"></div>
+  <div class="video-wrap" id="vid2"></div>
+  <button class="btn" onclick="showScreen('plan'); renderPlan()">Next ➜</button>
+  <div style="height:40px"></div>
+</section>
+
+<!-- 6️⃣ خطة اليوم -->
+<section class="screen" id="plan">
+  <h1 class="script">Celebrating Roqa 🎂</h1>
+  <div id="planBody"></div>
+
+  <!-- المحتوى الحقيقي: مخفي لحد ما العد التنازلي يوصل ليومين -->
+  <div id="planReal" style="display:none" class="invite">
+
+    <div class="invite-card">
+      <div class="tagline">A special day is waiting for you 🤍</div>
+      <p style="font-family:'Playfair Display',serif; font-size:1.15rem; color:#722f37">24 looks beautiful on you.</p>
+    </div>
+
+    <div class="invite-card">
+      <svg viewBox="0 0 120 46" style="width:110px; margin-bottom:6px" aria-hidden="true">
+        <g>
+          <line x1="38" y1="30" x2="30" y2="44" stroke="#a8a08b" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="60" y1="28" x2="60" y2="44" stroke="#a8a08b" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="82" y1="30" x2="90" y2="44" stroke="#a8a08b" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="38" cy="20" r="12" fill="#e8cdd9"/>
+          <path d="M32 20 a6 6 0 0 1 12 0 a4 4 0 0 1 -8 1" fill="none" stroke="#b98ea7" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="60" cy="16" r="13" fill="#efe0c8"/>
+          <path d="M53 16 a7 7 0 0 1 14 0 a4.5 4.5 0 0 1 -9 1" fill="none" stroke="#cfa976" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="82" cy="20" r="12" fill="#b98ea7"/>
+          <path d="M76 20 a6 6 0 0 1 12 0 a4 4 0 0 1 -8 1" fill="none" stroke="#8a6279" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="invite-sub">Dress Code</div>
+      <h3>Semi Formal ✨</h3>
+      <div class="swatches">
+        <div class="swatch"><div class="dot" style="background:#e8d7ba"></div>Beige</div>
+        <div class="swatch"><div class="dot" style="background:#b98ea7"></div>Mauve</div>
+        <div class="swatch"><div class="dot" style="background:#cfc4b2"></div>Soft neutrals</div>
+        <div class="swatch"><div class="dot" style="background:#722f37"></div>Burgundy</div>
+      </div>
+      <div class="think">Think elegant.<br>Think timeless.<br>Think effortlessly beautiful.</div>
+    </div>
+
+    <div class="invite-card">
+      <div class="plan-row">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><defs><clipPath id="c1"><rect width="80" height="80" rx="18"/></clipPath></defs><g clip-path="url(#c1)"><rect width="80" height="80" fill="#f3e4d3"/><circle cx="40" cy="32" r="13" fill="#d9a05b"/><rect x="20" y="18" width="40" height="2.5" rx="1.2" fill="#e9c48f" opacity=".65"/><path d="M-4 47 Q8 42 20 47 T44 47 T68 47 T92 47 V84 H-4 Z" fill="#b98ea7"/><path d="M-4 58 Q8 54 20 58 T44 58 T68 58 T92 58 V84 H-4 Z" fill="#9d7189"/><path d="M-4 69 Q8 66 20 69 T44 69 T68 69 T92 69 V84 H-4 Z" fill="#7d5a70"/></g></svg>
+        <span>🌊 Beautiful views</span>
+      </div>
+      <div class="plan-row">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><defs><clipPath id="c2"><rect width="80" height="80" rx="18"/></clipPath></defs><g clip-path="url(#c2)"><rect width="80" height="80" fill="#f0e2d0"/><g transform="rotate(-14 30 42)"><path d="M22 24 h16 l-2.2 13 a5.8 6.5 0 0 1 -11.6 0 Z" fill="#fbf4e6" stroke="#cfa976" stroke-width="1.6"/><path d="M23.8 29 h12.4 l-1.4 8 a4.8 5.2 0 0 1 -9.6 0 Z" fill="#e9c48f"/><line x1="30" y1="45" x2="30" y2="58" stroke="#cfa976" stroke-width="2.4"/><ellipse cx="30" cy="60" rx="7" ry="2.4" fill="#cfa976"/></g><g transform="rotate(14 52 42)"><path d="M44 24 h16 l-2.2 13 a5.8 6.5 0 0 1 -11.6 0 Z" fill="#fbf4e6" stroke="#cfa976" stroke-width="1.6"/><path d="M45.8 29 h12.4 l-1.4 8 a4.8 5.2 0 0 1 -9.6 0 Z" fill="#e9c48f"/><line x1="52" y1="45" x2="52" y2="58" stroke="#cfa976" stroke-width="2.4"/><ellipse cx="52" cy="60" rx="7" ry="2.4" fill="#cfa976"/></g><path d="M40 10 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6 Z" fill="#d9a05b"/><circle cx="18" cy="18" r="1.8" fill="#d9a05b"/><circle cx="63" cy="15" r="1.5" fill="#b98ea7"/></g></svg>
+        <span>🥂 Golden hour moments</span>
+      </div>
+      <div class="plan-row">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><defs><clipPath id="c3"><rect width="80" height="80" rx="18"/></clipPath></defs><g clip-path="url(#c3)"><rect width="80" height="80" fill="#efe3da"/><rect x="26" y="46" width="24" height="24" rx="2" fill="#fbf6ec" stroke="#d9c3a8" stroke-width="1.4" transform="rotate(6 38 58)"/><rect x="29.5" y="49" width="17" height="13" rx="1" fill="#b98ea7" transform="rotate(6 38 58)"/><rect x="16" y="16" width="48" height="30" rx="8" fill="#f7f1e4" stroke="#d9c3a8" stroke-width="1.6"/><rect x="16" y="16" width="48" height="8" rx="4" fill="#722f37"/><circle cx="40" cy="33" r="9.5" fill="#54393f"/><circle cx="40" cy="33" r="5.5" fill="#9d7189"/><circle cx="42.5" cy="30.5" r="1.6" fill="#fbf6ec"/><circle cx="56" cy="29" r="2.6" fill="#d9a05b"/></g></svg>
+        <span>📸 Pictures worth keeping forever</span>
+      </div>
+      <div class="plan-row">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><defs><clipPath id="c4"><rect width="80" height="80" rx="18"/></clipPath></defs><g clip-path="url(#c4)"><rect width="80" height="80" fill="#f3e6e0"/><ellipse cx="40" cy="67" rx="27" ry="4" fill="#d9c3a8"/><rect x="20" y="47" width="40" height="19" rx="5" fill="#efe0c8"/><path d="M20 50 q3 6 6 0 q3 6 6 0 q3 6 6 0 q3 6 6 0 q3 6 6 0 q3 6 6 0 q2 4 4 0 v-4 h-40 Z" fill="#722f37"/><rect x="27" y="32" width="26" height="16" rx="5" fill="#e6cfd9"/><rect x="38.4" y="19" width="3.2" height="12" rx="1.4" fill="#b98ea7"/><ellipse cx="40" cy="16" rx="2.6" ry="3.6" fill="#d9a05b"/><circle cx="33" cy="40" r="1.5" fill="#9d7189"/><circle cx="47" cy="40" r="1.5" fill="#9d7189"/><circle cx="40" cy="42.5" r="1.5" fill="#9d7189"/></g></svg>
+        <span>🎂 A little celebration</span>
+      </div>
+      <div class="plan-row">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><defs><clipPath id="c5"><rect width="80" height="80" rx="18"/></clipPath></defs><g clip-path="url(#c5)"><rect width="80" height="80" fill="#f0e2d0"/><rect x="22" y="40" width="36" height="27" rx="4" fill="#efe0c8" stroke="#d9c3a8" stroke-width="1.4"/><rect x="18" y="31" width="44" height="11" rx="3" fill="#e6cfd9"/><rect x="37" y="31" width="6" height="36" fill="#722f37"/><path d="M40 30 c-8 -9 -18 -4 -12 2 c3 3 9 1 12 -2 Z" fill="#722f37"/><path d="M40 30 c8 -9 18 -4 12 2 c-3 3 -9 1 -12 -2 Z" fill="#8c3b45"/><path d="M62 16 l1.4 3.8 3.8 1.4 -3.8 1.4 -1.4 3.8 -1.4 -3.8 -3.8 -1.4 3.8 -1.4 Z" fill="#d9a05b"/><circle cx="17" cy="22" r="1.8" fill="#b98ea7"/></g></svg>
+        <span>✨ A few surprises along the way</span>
+      </div>
+      <div class="plan-row">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><defs><clipPath id="c6"><rect width="80" height="80" rx="18"/></clipPath></defs><g clip-path="url(#c6)"><rect width="80" height="80" fill="#efe3d3"/><circle cx="28" cy="36" r="12" fill="#d9a05b" opacity=".18"/><circle cx="52" cy="30" r="14" fill="#d9a05b" opacity=".18"/><rect x="23" y="42" width="10" height="24" rx="3" fill="#efe0c8" stroke="#d9c3a8" stroke-width="1.2"/><rect x="37" y="34" width="10" height="32" rx="3" fill="#e6cfd9" stroke="#c7a8b8" stroke-width="1.2"/><rect x="51" y="46" width="10" height="20" rx="3" fill="#fbf6ec" stroke="#d9c3a8" stroke-width="1.2"/><ellipse cx="28" cy="38" rx="2.6" ry="4" fill="#d9a05b"/><ellipse cx="42" cy="30" rx="2.6" ry="4" fill="#d9a05b"/><ellipse cx="56" cy="42" rx="2.6" ry="4" fill="#d9a05b"/><rect x="16" y="66" width="48" height="3" rx="1.5" fill="#d9c3a8"/></g></svg>
+        <span>🤍 Memories we'll talk about for years</span>
+      </div>
+    </div>
+
+    <div class="invite-card">
+      <p style="font-family:'Playfair Display',serif; font-style:italic; color:#54393f; margin-bottom:14px">No itinerary. No spoilers.</p>
+      <div class="invite-footer">Just show up,<br>bring your smile,<br>and trust me with the rest 🤍</div>
+    </div>
+
+  </div>
+  <div style="height:40px"></div>
+</section>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0});
+}
+
+/* 1) الباسورد */
+function checkPassword(){
+  const input = document.getElementById('pwInput');
+  if(input.value === CONFIG.PASSWORD){
+    showScreen('mail'); setupPhoto();
+  }else{
+    const err = document.getElementById('pwError');
+    err.textContent = "Wrong password 😅 try again";
+    input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
+    input.value = "";
+  }
+}
+document.getElementById('pwInput').addEventListener('keydown', e=>{ if(e.key==='Enter') checkPassword(); });
+
+/* 2) الصورة */
+function setupPhoto(){
+  document.getElementById('childPhoto').src = CONFIG.CHILD_PHOTO;
+}
+
+/* الرسالة */
+function openLetter(){
+  document.getElementById('letterText').textContent = CONFIG.LETTER_TEXT;
+  document.getElementById('letterOverlay').classList.add('open');
+}
+function closeLetter(){ document.getElementById('letterOverlay').classList.remove('open'); }
+function goToParty(){
+  closeLetter(); showScreen('party'); startCountdown(); launchBalloons();
+}
+
+/* 3) العد التنازلي */
+let cdTimer;
+function diffToBirthday(){ return CONFIG.BIRTHDAY - new Date(); }
+function startCountdown(){
+  clearInterval(cdTimer);
+  const tick = ()=>{
+    let d = diffToBirthday(); if(d < 0) d = 0;
+    document.getElementById('cdD').textContent = Math.floor(d/86400000);
+    document.getElementById('cdH').textContent = Math.floor(d/3600000)%24;
+    document.getElementById('cdM').textContent = Math.floor(d/60000)%60;
+    document.getElementById('cdS').textContent = Math.floor(d/1000)%60;
+  };
+  tick(); cdTimer = setInterval(tick,1000);
+}
+function launchBalloons(){
+  const party = document.getElementById('party');
+  const emojis = ['🎈','🎉','🎊','✨','🎂'];
+  for(let i=0;i<14;i++){
+    const b = document.createElement('span');
+    b.className='balloon'; b.textContent = emojis[i%emojis.length];
+    b.style.left = Math.random()*95+'%';
+    b.style.animationDuration = (7+Math.random()*7)+'s';
+    b.style.animationDelay = (Math.random()*6)+'s';
+    party.appendChild(b);
+  }
+}
+
+/* الستارة + الأغنية */
+function enterCelebration(){
+  startMusic(); // لازم تتنده جوه ضغطة الزرار عشان المتصفح يسمح بالصوت
+  const curtain = document.getElementById('curtain');
+  // الستارة تظهر مقفولة فورًا وتغطي الشاشة، والصفحة الجديدة تتجهز وراها
+  curtain.classList.add('show');
+  showScreen('reasons'); buildCards();
+  confettiBurst();
+  // بعد لحظة تبدأ تفتح ببطء مرة واحدة وتفضل مفتوحة
+  setTimeout(()=>{
+    curtain.classList.add('open');
+    setTimeout(()=>{ curtain.classList.remove('show','open'); }, 3700);
+  }, 800);
+}
+
+/* 🎵 مشغل الأغنية */
+let musicOn = false;
+function startMusic(){
+  if(!CONFIG.SONG_URL) return;
+  const a = document.getElementById('song');
+  if(!a.src) a.src = CONFIG.SONG_URL;
+  a.volume = .85;
+  a.play().then(()=>{ musicOn = true; updateMusicBtn(); }).catch(()=>{ musicOn = false; updateMusicBtn(); });
+  document.getElementById('musicBtn').style.display = 'block';
+}
+function toggleMusic(){
+  const a = document.getElementById('song');
+  if(a.paused){ a.play(); musicOn = true; }
+  else{ a.pause(); musicOn = false; }
+  updateMusicBtn();
+}
+function updateMusicBtn(){
+  const btn = document.getElementById('musicBtn');
+  btn.textContent = musicOn ? '🎵' : '🔇';
+  btn.classList.toggle('playing', musicOn);
+}
+
+/* 4) كروت الأسباب */
+function buildCards(){
+  const grid = document.getElementById('grid');
+  if(grid.children.length) return;
+  CONFIG.REASONS.forEach((r,i)=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-front">
+          ${r.img ? `<img src="${r.img}" alt="Reason ${i+1}" loading="lazy">` : `<span class="num">${i+1}</span>`}
+        </div>
+        <div class="card-face card-back">${r.text}</div>
+      </div>`;
+    card.addEventListener('click', ()=> card.classList.toggle('flipped'));
+    grid.appendChild(card);
+  });
+  buildVideos();
+}
+
+/* 5) الفيديوهات */
+let songPausedByVideo = false;
+function buildVideos(){
+  [['vid1',CONFIG.VIDEO_1],['vid2',CONFIG.VIDEO_2]].forEach(([id,url])=>{
+    const box = document.getElementById(id);
+    box.innerHTML = url
+      ? `<video src="${url}" controls playsinline preload="metadata"></video>`
+      : `<div class="video-missing">🎬 Coming soon...</div>`;
+  });
+  // 🔇 الأغنية بتتكتم تلقائي لما أي فيديو يشتغل، وبترجع لما الفيديوهات كلها تقف
+  const song = document.getElementById('song');
+  const vids = document.querySelectorAll('.video-wrap video');
+  vids.forEach(v=>{
+    v.addEventListener('play', ()=>{
+      // وقف أي فيديو تاني شغال
+      vids.forEach(o=>{ if(o!==v) o.pause(); });
+      if(!song.paused){ song.pause(); songPausedByVideo = true; }
+      musicOn = false; updateMusicBtn();
+    });
+    const maybeResume = ()=>{
+      const anyPlaying = [...vids].some(o=>!o.paused && !o.ended);
+      if(!anyPlaying && songPausedByVideo){
+        song.play().catch(()=>{});
+        songPausedByVideo = false; musicOn = true; updateMusicBtn();
+      }
+    };
+    v.addEventListener('pause', maybeResume);
+    v.addEventListener('ended', maybeResume);
+  });
+}
+
+/* 6) خطة اليوم */
+function renderPlan(){
+  const body = document.getElementById('planBody');
+  const real = document.getElementById('planReal');
+  const daysLeft = diffToBirthday() / 86400000;
+  if(daysLeft > CONFIG.PLAN_UNLOCK_DAYS){
+    real.style.display = 'none';
+    body.innerHTML = `
+      <div id="stayTuned">
+        <span class="eyes">👀</span>
+        <p>Stay tuned...<br>This page unlocks when only <b style="color:var(--gold-soft)">${CONFIG.PLAN_UNLOCK_DAYS} days</b> are left 😉</p>
+      </div>`;
+  }else{
+    body.innerHTML = '';
+    real.style.display = 'block';
+  }
+}
+
+/* كونفيتي */
+function confettiBurst(){
+  const colors = ['#e9b95c','#f07f9e','#f5d99a','#8c1830','#ffffff'];
+  for(let i=0;i<70;i++){
+    const c = document.createElement('div');
+    c.className='confetti-piece';
+    c.style.left = Math.random()*100+'vw';
+    c.style.width = c.style.height = (6+Math.random()*7)+'px';
+    c.style.background = colors[i%colors.length];
+    c.style.borderRadius = Math.random()>.5 ? '50%' : '2px';
+    c.style.animationDuration = (2.5+Math.random()*3)+'s';
+    c.style.animationDelay = (Math.random()*1.5)+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 7000);
+  }
+}
+</script>
+</body>
+</html>
