@@ -302,6 +302,7 @@ body{
   *{animation-duration:.01s !important; transition-duration:.01s !important}
 }
 </style>
+<script data-goatcounter="https://roqa-birthday.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -361,7 +362,7 @@ body{
   <h1 class="script">24 Reasons Why I Love You</h1>
   <p class="hint">Tap every card 💛</p>
   <div id="grid"></div>
-  <button class="btn" onclick="showScreen('videos')">Next ➜</button>
+  <button class="btn" onclick="showScreen('videos'); track('videos-page')">Next ➜</button>
   <div style="height:40px"></div>
 </section>
 
@@ -370,7 +371,7 @@ body{
   <h1 class="script">Made For You</h1>
   <div class="video-wrap" id="vid1"></div>
   <div class="video-wrap" id="vid2"></div>
-  <button class="btn" onclick="showScreen('plan'); renderPlan()">Next ➜</button>
+  <button class="btn" onclick="showScreen('plan'); renderPlan(); track('plan-page')">Next ➜</button>
   <div style="height:40px"></div>
 </section>
 
@@ -455,10 +456,20 @@ function showScreen(id){
   window.scrollTo({top:0});
 }
 
+/* 📊 تتبع الأحداث — بيتسجل في GoatCounter من غير ما يبان لرقية */
+function track(name){
+  try{
+    if(window.goatcounter && window.goatcounter.count){
+      window.goatcounter.count({ path: name, title: name, event: true });
+    }
+  }catch(e){}
+}
+
 /* 1) الباسورد */
 function checkPassword(){
   const input = document.getElementById('pwInput');
   if(input.value === CONFIG.PASSWORD){
+    track('password-unlocked');
     showScreen('mail'); setupPhoto();
   }else{
     const err = document.getElementById('pwError');
@@ -476,6 +487,7 @@ function setupPhoto(){
 
 /* الرسالة */
 function openLetter(){
+  track('letter-opened');
   document.getElementById('letterText').textContent = CONFIG.LETTER_TEXT;
   document.getElementById('letterOverlay').classList.add('open');
 }
@@ -513,6 +525,7 @@ function launchBalloons(){
 
 /* الستارة + الأغنية */
 function enterCelebration(){
+  track('entered-celebration');
   startMusic(); // لازم تتنده جوه ضغطة الزرار عشان المتصفح يسمح بالصوت
   const curtain = document.getElementById('curtain');
   // الستارة تظهر مقفولة فورًا وتغطي الشاشة، والصفحة الجديدة تتجهز وراها
