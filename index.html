@@ -343,6 +343,21 @@ body{
 .confetti-piece{position:fixed; top:-14px; z-index:90; pointer-events:none; animation:confFall linear forwards}
 @keyframes confFall{to{transform:translateY(110vh) rotate(720deg); opacity:.4}}
 
+/* ---------- شاشة التحميل ---------- */
+#splash{
+  position:fixed; inset:0; z-index:200;
+  background:radial-gradient(ellipse at 50% 0%, var(--bg-mid) 0%, var(--bg-deep) 70%);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity .6s;
+}
+#splash.hide{opacity:0; pointer-events:none}
+.splash-heart{font-size:3.2rem; animation:pulse 1.2s infinite}
+
+.today-msg{
+  font-family:'Great Vibes',cursive; font-size:clamp(2.2rem,7vw,3.2rem);
+  color:var(--gold-soft); animation:pulse 1.6s infinite; padding:10px 0;
+}
+
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01s !important; transition-duration:.01s !important}
 }
@@ -350,6 +365,9 @@ body{
 <script data-goatcounter="https://roqa-birthday.goatcounter.com/count" async src="count.js"></script>
 </head>
 <body>
+
+<!-- 🤍 شاشة التحميل -->
+<div id="splash"><span class="splash-heart">🤍</span></div>
 
 <!-- 🎭 الستارة -->
 <div id="curtain"><div class="curtain-half" id="curtainL"></div><div class="curtain-half" id="curtainR"></div></div>
@@ -571,7 +589,7 @@ function checkPassword(){
     showScreen('mail'); setupPhoto();
   }else{
     const err = document.getElementById('pwError');
-    err.textContent = "Wrong password 😅 try again";
+    err.textContent = "Not quite 😅 Hint: a date you know by heart 😉";
     input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
     input.value = "";
   }
@@ -600,7 +618,16 @@ function diffToBirthday(){ return CONFIG.BIRTHDAY - new Date(); }
 function startCountdown(){
   clearInterval(cdTimer);
   const tick = ()=>{
-    let d = diffToBirthday(); if(d < 0) d = 0;
+    let d = diffToBirthday();
+    if(d <= 0){
+      clearInterval(cdTimer);
+      // يوم 24 نفسه: It's TODAY — وبعد ما اليوم يخلص: رسالة الذكرى
+      const dayPassed = -d > 86400000; // عدى أكتر من 24 ساعة
+      document.getElementById('countdown').innerHTML = dayPassed
+        ? '<div class="today-msg">Hope it was a day to remember 🤍</div>'
+        : '<div class="today-msg">It\'s TODAY 🎉</div>';
+      return;
+    }
     document.getElementById('cdD').textContent = Math.floor(d/86400000);
     document.getElementById('cdH').textContent = Math.floor(d/3600000)%24;
     document.getElementById('cdM').textContent = Math.floor(d/60000)%60;
@@ -796,6 +823,22 @@ async function submitMemory(){
     document.getElementById('finale').classList.add('active');
     setTimeout(()=> track('finale-view'), 2500);
   }
+})();
+
+/* 🤍 إخفاء شاشة التحميل: بعد 1.8 ثانية على الأقل، أو 4 ثواني كحد أقصى */
+(function(){
+  const MIN = 1800, MAX = 4000, t0 = Date.now();
+  let hidden = false;
+  function hideSplash(){
+    if(hidden) return; hidden = true;
+    const s = document.getElementById('splash');
+    s.classList.add('hide');
+    setTimeout(()=> s.remove(), 700);
+  }
+  window.addEventListener('load', ()=>{
+    setTimeout(hideSplash, Math.max(0, MIN - (Date.now() - t0)));
+  });
+  setTimeout(hideSplash, MAX);
 })();
 
 /* كونفيتي */
