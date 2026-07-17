@@ -73,6 +73,15 @@ Muhammed`,
 
   // 📅 صفحة الخطة — بتظهر لما يفضل يومين أو أقل (المحتوى نفسه جوه صفحة plan تحت)
   PLAN_UNLOCK_DAYS: 2,
+
+  // 🤍 صفحة الذكرى — بتفتح الجمعة 24 يوليو الساعة 8 مساءً
+  MEMORY_UNLOCK: new Date(2026, 6, 24, 20, 0, 0),
+
+  // 📨 كود Formspree عشان الإجابات توصلك على إيميلك
+  FORMSPREE_ID: "xlgqjkqr",
+
+  // 🔒 من التاريخ ده (الجمعة 31 يوليو) الموقع كله بيتحول لرسالة الوعد
+  SITE_CLOSE: new Date(2026, 6, 31, 0, 0, 0),
 };
 </script>
 
@@ -295,6 +304,42 @@ body{
 .plan-row span{font-size:1rem; font-weight:600; color:#54393f; line-height:1.6}
 .invite-footer{font-family:'Great Vibes',cursive; font-size:1.55rem; color:#722f37; line-height:1.7}
 
+/* ---------- 7) صفحة الذكرى ---------- */
+#memory{justify-content:flex-start; padding-top:70px}
+#memory h1{font-size:clamp(2.4rem,7vw,4rem); margin-bottom:8px}
+#memory .sub{opacity:.8; margin-bottom:30px; font-size:1rem}
+.q-label{
+  display:block; font-family:'Playfair Display',serif; color:#722f37;
+  font-size:1.05rem; margin-bottom:10px; text-align:left;
+}
+.q-input{
+  width:100%; min-height:76px; resize:vertical; border-radius:12px;
+  border:1.5px solid rgba(114,47,55,.3); background:#fffdf8; color:#3a2430;
+  font-family:'Nunito',sans-serif; font-size:1rem; padding:12px 14px; outline:none;
+  transition:border .2s; margin-bottom:4px;
+}
+.q-input:focus{border-color:#9d7189}
+.teaser-card{text-align:center}
+.teaser-card .spark{font-size:2rem; display:inline-block; animation:pulse 1.8s infinite}
+#memoryError{color:#a82040; font-weight:700; min-height:22px; margin-top:10px}
+
+/* 🖼️ الوعد المتبروز */
+.promise{
+  background:linear-gradient(165deg,#f8f2e5,#ecdfc9);
+  border:2px solid #c9a24a; border-radius:8px;
+  box-shadow:0 0 0 7px #f8f2e5, 0 0 0 9px #c9a24a, 0 24px 60px rgba(0,0,0,.5);
+  padding:44px 30px; text-align:center; color:#4a333a; margin:14px 8px 30px;
+  position:relative;
+}
+.promise::before, .promise::after{
+  content:"✦"; position:absolute; color:#c9a24a; font-size:1rem;
+}
+.promise::before{top:10px; left:14px}
+.promise::after{bottom:10px; right:14px}
+.promise .p-small{font-size:.8rem; letter-spacing:4px; text-transform:uppercase; color:#a3806b; margin-bottom:16px}
+.promise .p-script{font-family:'Great Vibes',cursive; font-size:2.3rem; color:#722f37; line-height:1.5}
+.promise .p-date{font-family:'Playfair Display',serif; font-size:1.3rem; letter-spacing:3px; color:#9d7189; margin-top:18px}
+
 .confetti-piece{position:fixed; top:-14px; z-index:90; pointer-events:none; animation:confFall linear forwards}
 @keyframes confFall{to{transform:translateY(110vh) rotate(720deg); opacity:.4}}
 
@@ -310,6 +355,17 @@ body{
 <div id="curtain"><div class="curtain-half" id="curtainL"></div><div class="curtain-half" id="curtainR"></div></div>
 
 <!-- مشغل الأغنية + زرار التحكم -->
+<!-- 🖼️ شاشة الختام — بتظهر لوحدها بعد إرسال الإجابات أو بعد 31 يوليو -->
+<section class="screen" id="finale">
+  <div class="invite" style="max-width:480px">
+    <div class="promise">
+      <div class="p-small">The memory is sealed</div>
+      <div class="p-script">See you next year...<br>Same place. Same day. 🤍</div>
+      <div class="p-date">24 . 07 . 2027</div>
+    </div>
+  </div>
+</section>
+
 <audio id="song" loop preload="auto"></audio>
 <button id="musicBtn" onclick="toggleMusic()" aria-label="Play or pause the song">🎵</button>
 
@@ -445,6 +501,48 @@ body{
       <div class="invite-footer">Just show up,<br>bring your smile,<br>and trust me with the rest 🤍</div>
     </div>
 
+    <div id="memoryTeaser"></div>
+
+  </div>
+  <div style="height:40px"></div>
+</section>
+
+<!-- 7️⃣ صفحة الذكرى -->
+<section class="screen" id="memory">
+  <h1 class="script">The Memory of 24.07 🤍</h1>
+  <p class="sub">Before this day becomes a memory... let's keep a piece of it forever.</p>
+
+  <div class="invite" id="memoryForm">
+    <div class="invite-card">
+      <label class="q-label" for="q1">🤍 What was your favorite moment of the day?</label>
+      <textarea class="q-input" id="q1"></textarea>
+    </div>
+    <div class="invite-card">
+      <label class="q-label" for="q2">😊 What was the moment that made you smile the most?</label>
+      <textarea class="q-input" id="q2"></textarea>
+    </div>
+    <div class="invite-card">
+      <label class="q-label" for="q3">🎁 Which gift did you love the most?</label>
+      <textarea class="q-input" id="q3"></textarea>
+    </div>
+    <div class="invite-card">
+      <label class="q-label" for="q4">✨ Describe today in one word</label>
+      <textarea class="q-input" id="q4" style="min-height:52px"></textarea>
+    </div>
+    <div class="invite-card">
+      <label class="q-label" for="q5">💌 A message to your future self — you'll read this exactly one year from now</label>
+      <textarea class="q-input" id="q5" style="min-height:110px"></textarea>
+    </div>
+    <button class="btn" onclick="submitMemory()" id="memorySendBtn">Seal the Memory 🤍</button>
+    <div id="memoryError"></div>
+  </div>
+
+  <div class="invite" id="memoryDone" style="display:none">
+    <div class="promise">
+      <div class="p-small">The memory is sealed</div>
+      <div class="p-script">See you next year...<br>Same place. Same day. 🤍</div>
+      <div class="p-date">24 . 07 . 2027</div>
+    </div>
   </div>
   <div style="height:40px"></div>
 </section>
@@ -627,8 +725,78 @@ function renderPlan(){
   }else{
     body.innerHTML = '';
     real.style.display = 'block';
+    renderMemoryTeaser();
   }
 }
+
+/* 7) صفحة الذكرى */
+function renderMemoryTeaser(){
+  const t = document.getElementById('memoryTeaser');
+  if(new Date() < CONFIG.MEMORY_UNLOCK){
+    t.innerHTML = `
+      <div class="invite-card teaser-card">
+        <span class="spark">✨</span>
+        <p style="margin-top:8px">Oh, and one more thing...<br>
+        Something special unlocks <b style="color:#722f37">Friday night</b>,
+        and it's only meant for <b style="color:#722f37">that night till Saturday night</b> 👀<br>
+        Keep this place close.</p>
+      </div>`;
+  }else{
+    t.innerHTML = `
+      <div class="invite-card teaser-card">
+        <p style="margin-bottom:16px">It's time 🤍</p>
+        <button class="btn" onclick="openMemory()">Open Friday's Memory ✨</button>
+      </div>`;
+  }
+}
+function openMemory(){
+  track('memory-page');
+  showScreen('memory');
+}
+async function submitMemory(){
+  const answers = {
+    "Favorite moment": document.getElementById('q1').value.trim(),
+    "Moment that made her smile the most": document.getElementById('q2').value.trim(),
+    "Favorite gift": document.getElementById('q3').value.trim(),
+    "Today in one word": document.getElementById('q4').value.trim(),
+    "Message to future self": document.getElementById('q5').value.trim(),
+  };
+  const err = document.getElementById('memoryError');
+  if(!Object.values(answers).some(v=>v)){
+    err.textContent = "Write at least one answer 🤍"; return;
+  }
+  const btn = document.getElementById('memorySendBtn');
+  btn.disabled = true; btn.textContent = "Sealing..."; err.textContent = "";
+  try{
+    const res = await fetch(`https://formspree.io/f/${CONFIG.FORMSPREE_ID}`, {
+      method:'POST',
+      headers:{'Accept':'application/json','Content-Type':'application/json'},
+      body: JSON.stringify(answers)
+    });
+    if(!res.ok) throw new Error('send failed');
+    track('memory-submitted');
+    try{ localStorage.setItem('memorySealed','1'); }catch(e){}
+    document.getElementById('memoryForm').style.display = 'none';
+    document.getElementById('memoryDone').style.display = 'block';
+    confettiBurst();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }catch(e){
+    err.textContent = "Hmm, that didn't go through — check your internet and try again 🤍";
+    btn.disabled = false; btn.textContent = "Seal the Memory 🤍";
+  }
+}
+
+/* 🖼️ لو الذكرى اتبعتت من الجهاز ده، أو عدّى يوم 31 يوليو:
+   الموقع كله بيفتح على رسالة الوعد على طول */
+(function(){
+  let sealed = false;
+  try{ sealed = localStorage.getItem('memorySealed') === '1'; }catch(e){}
+  if(sealed || new Date() >= CONFIG.SITE_CLOSE){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('finale').classList.add('active');
+    setTimeout(()=> track('finale-view'), 2500);
+  }
+})();
 
 /* كونفيتي */
 function confettiBurst(){
